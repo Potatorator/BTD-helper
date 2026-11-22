@@ -7,6 +7,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unpack app sources
         run: tar -xJf app.tar.xz
+      - name: Apply fixes
+        run: for p in $(ls fix*.patch 2>/dev/null | sort -V); do echo "Applying $p"; patch -p1 < "$p"; done
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
